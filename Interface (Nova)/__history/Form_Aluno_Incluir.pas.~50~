@@ -1,0 +1,319 @@
+unit Form_Aluno_Incluir;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  Tfrm_aluno = class(TForm)
+    Panel1: TPanel;
+    Button4: TButton;
+    Button3: TButton;
+    Button2: TButton;
+    Button1: TButton;
+    CB_aluno: TComboBox;
+    Label1: TLabel;
+    txt_aluno: TLabeledEdit;
+    txt_telefone: TLabeledEdit;
+    Label2: TLabel;
+    txt_ra: TLabeledEdit;
+    txt_end: TLabeledEdit;
+    txt_rg: TLabeledEdit;
+    CB_curso: TComboBox;
+    Label3: TLabel;
+    Label4: TLabel;
+    lbl_id: TLabel;
+    Label5: TLabel;
+    lb_id: TLabel;
+    CB_cat: TComboBox;
+    Label7: TLabel;
+    //funções locais
+    procedure LimpaCampos();
+    function ValidaCampos():boolean;
+    procedure AlimentaCB();
+    procedure AlimentaCAT();
+    procedure Autopreenchimento(nomePr:string);
+    //funções locais
+    procedure Button4Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure CB_alunoChange(Sender: TObject);
+    procedure Button2Click(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_aluno: Tfrm_aluno;
+
+implementation
+
+uses Form_Dados;
+
+{$R *.dfm}
+
+procedure Tfrm_aluno.Button1Click(Sender: TObject);
+var Par:string ;
+    id_cat:integer;
+begin
+
+  if(ValidaCampos = false) then begin
+    exit;
+  end else begin
+
+    Par := CB_cat.Text;
+
+    //para busscar o id da categoria selecionada
+    with Form_dados.Modulo_Dados do begin
+
+      Query_Cat.Active := true;
+      Query_Cat.Close;
+      Query_Cat.SQL.Clear;
+      Query_Cat.SQL.add('select * from categorias where descricao = :Par');
+      Query_Cat.Parameters.ParamByName('Par').Value := Par;
+      Query_Cat.Open;
+
+      id_cat := Query_Catid.Value;
+      //showmessage(inttostr(id_cat));
+
+      Query_Cat.Close;
+      Query_Cat.SQL.Clear;
+      Query_Cat.SQL.add('select * from categorias');
+      Query_Cat.Open;
+
+    end;
+
+    Form_Dados.Modulo_Dados.NovoAluno(txt_aluno.Text, txt_ra.Text, txt_rg.Text, txt_end.Text, txt_telefone.Text, CB_curso.Text, id_cat);
+    showmessage('Cadastrado com Sucesso!');
+    AlimentaCB();
+    LimpaCampos();
+  end;
+
+end;
+
+procedure Tfrm_aluno.Button2Click(Sender: TObject);
+var Par:string;
+    id_cat:integer;
+begin
+
+  if(ValidaCampos = false) or (lbl_id.Caption = '?') then begin
+    exit;
+  end else begin
+
+    Par := CB_cat.Text;
+
+    //para busscar o id da categoria selecionada
+    with Form_dados.Modulo_Dados do begin
+
+      Query_Cat.Active := true;
+      Query_Cat.Close;
+      Query_Cat.SQL.Clear;
+      Query_Cat.SQL.add('select * from categorias where descricao = :Par');
+      Query_Cat.Parameters.ParamByName('Par').Value := Par;
+      Query_Cat.Open;
+
+      id_cat := Query_Catid.Value;
+      //showmessage(inttostr(id_cat));
+
+      Query_Cat.Close;
+      Query_Cat.SQL.Clear;
+      Query_Cat.SQL.add('select * from categorias');
+      Query_Cat.Open;
+
+    end;
+
+    Form_dados.Modulo_Dados.AtualizarAluno(strtoint(lb_id.Caption), txt_aluno.Text, txt_ra.Text, txt_rg.Text, txt_end.Text, txt_telefone.Text, Cb_curso.Text, id_cat);
+    //Form_Dados.Modulo_Dados.AtualizarLivro(strtoint(lbl_id.Caption),txt_livro.Text, txt_autor.Text, txt_edicao.Text, txt_editora.Text, txt_setor.Text, strtoint(txt_exemplar.Text), strtoint(txt_quantidade.Text), id_cat);
+    showmessage('Atualizado com Sucesso!');
+    AlimentaCB();
+    LimpaCampos();
+
+  end;
+
+end;
+
+procedure Tfrm_aluno.Button4Click(Sender: TObject);
+begin
+
+    Self.Close
+
+end;
+
+procedure Tfrm_aluno.CB_alunoChange(Sender: TObject);
+begin
+
+  Autopreenchimento(CB_aluno.Text);
+
+end;
+
+procedure Tfrm_aluno.FormActivate(Sender: TObject);
+begin
+
+  Form_Dados.Modulo_Dados.Query_aluno.Active := true;
+  Form_Dados.Modulo_Dados.Query_aluno.Close;
+  Form_Dados.Modulo_Dados.Query_aluno.sql.Clear;
+  Form_Dados.Modulo_Dados.Query_aluno.sql.Add('select * from alunos');
+  Form_Dados.Modulo_Dados.Query_aluno.Open;
+  AlimentaCB();
+
+  Form_Dados.Modulo_Dados.Query_cat.Active := true;
+  Form_Dados.Modulo_Dados.Query_cat.Close;
+  Form_Dados.Modulo_Dados.Query_cat.sql.Clear;
+  Form_Dados.Modulo_Dados.Query_cat.sql.Add('select * from categorias');
+  Form_Dados.Modulo_Dados.Query_cat.Open;
+  AlimentaCAT();
+
+end;
+
+procedure Tfrm_aluno.LimpaCampos();
+begin
+
+  txt_aluno.Text := '';
+  txt_ra.Text := '';
+  txt_rg.Text := '';
+  txt_end.Text := '';
+  txt_telefone.Text := '';
+  lb_id.Caption := '?';
+  CB_Curso.ItemIndex := 1;
+
+end;
+
+function tfrm_aluno.ValidaCampos():boolean;
+begin
+
+  if(txt_aluno.Text = '') then begin
+    ShowMessage('Campos devem ser preenchidos!');
+    txt_aluno.SetFocus;
+    Result := false;
+    Exit;
+  end;
+
+  if(txt_ra.Text = '') then begin
+    ShowMessage('Campos devem ser preenchidos!');
+    txt_ra.SetFocus;
+    Result := false;
+    Exit;
+  end;
+
+  if(length(txt_ra.Text) > 11) then begin
+    ShowMessage('RA exede tamanho maximo!');
+    txt_ra.SetFocus;
+    Result := false;
+    Exit;
+  end;
+
+  if(txt_rg.Text = '') then begin
+    ShowMessage('Campos devem ser preenchidos!');
+    txt_rg.SetFocus;
+    Result := false;
+    Exit;
+  end;
+
+  if(length(txt_rg.Text) > 11) then begin
+    ShowMessage('RG exede tamanho maximo!');
+    txt_rg.SetFocus;
+    Result := false;
+    Exit;
+  end;
+
+  if(txt_end.Text = '') then begin
+    ShowMessage('Campos devem ser preenchidos!');
+    txt_end.SetFocus;
+    Result := false;
+    Exit;
+  end;
+
+  if(txt_telefone.Text = '') then begin
+    ShowMessage('Campos devem ser preenchidos!');
+    txt_telefone.SetFocus;
+    Result := false;
+    Exit;
+  end;
+
+  Result := true;
+
+end;
+
+procedure Tfrm_aluno.AlimentaCB();
+begin
+
+  CB_aluno.Items.Clear;
+
+    while not Form_dados.Modulo_Dados.DataSourceA.DataSet.Eof do begin
+
+      CB_aluno.Items.AddObject(Form_dados.Modulo_Dados.DataSourceA.DataSet.FieldByName('nome').asString,
+      TObject(Form_dados.Modulo_Dados.DataSourceA.DataSet.FieldByName('nome').asString));
+      Form_dados.Modulo_Dados.DataSourceA.DataSet.Next;
+
+    end;
+
+    CB_aluno.ItemIndex := 0;
+
+end;
+
+procedure Tfrm_aluno.AlimentaCAT();
+begin
+
+  CB_cat.Items.Clear;
+
+    while not Form_dados.Modulo_Dados.DataSourceCat.DataSet.Eof do begin
+
+      CB_cat.Items.AddObject(Form_dados.Modulo_Dados.DataSourceCat.DataSet.FieldByName('descricao').asString,
+      TObject(Form_dados.Modulo_Dados.DataSourceCat.DataSet.FieldByName('descricao').asString));
+      Form_dados.Modulo_Dados.DataSourceCat.DataSet.Next;
+
+    end;
+
+    CB_cat.ItemIndex := 0;
+
+end;
+
+procedure Tfrm_aluno.Autopreenchimento(nomePr: string);
+var txt1:integer;
+    txt2:string;
+    txt3:string;
+    txt4:string;
+    txt5:string;
+    txt6:string;
+    txt7:string;
+    txt8:string;
+begin
+
+  with Form_Dados.Modulo_Dados.Query_aluno do begin
+    Close;
+    SQL.Clear;
+    SQL.Add('select * from alunos where nome = :nomePr');
+    Parameters.ParamByName('nomePr').Value := nomePr;
+    Open;
+
+  end;
+
+  txt1 := Form_Dados.Modulo_Dados.Query_Alunoid.Value;
+  txt2 := Form_Dados.Modulo_Dados.Query_Alunonome.Value;
+  txt3 := Form_Dados.Modulo_Dados.Query_Alunora.Value;
+  txt4 := Form_Dados.Modulo_Dados.Query_Alunorg.Value;
+  txt5 := Form_Dados.Modulo_Dados.Query_Alunoendereco.Value;
+  txt6 := Form_Dados.Modulo_Dados.Query_Alunotelefone.Value;
+
+  //Váriaveis sendo depositadas nas textboxes
+  lb_id.Caption := inttostr(txt1);
+  txt_aluno.Text := txt2;
+  txt_ra.Text := txt3;
+  txt_rg.Text := txt4;
+  txt_end.Text := txt5;
+  txt_telefone.Text := txt6;
+
+  //Resetando para Visualização
+  Form_Dados.Modulo_Dados.Query_aluno.Close;
+  Form_Dados.Modulo_Dados.Query_aluno.SQL.Clear;
+  Form_Dados.Modulo_Dados.Query_aluno.SQL.Add('select * from alunos');
+  Form_Dados.Modulo_Dados.Query_aluno.Open;
+  //Isso Reseta o codigo sql da query para selecionar todos os produtos
+
+end;
+
+end.

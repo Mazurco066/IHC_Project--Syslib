@@ -1,0 +1,131 @@
+object frm_categorias: Tfrm_categorias
+  Left = 0
+  Top = 0
+  BorderStyle = bsSingle
+  Caption = 'Categorias'
+  ClientHeight = 197
+  ClientWidth = 486
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 486
+    Height = 197
+    Align = alClient
+    Color = clBlack
+    ParentBackground = False
+    TabOrder = 0
+    object Panel2: TPanel
+      Left = 1
+      Top = 1
+      Width = 484
+      Height = 195
+      Align = alClient
+      Color = clBlack
+      ParentBackground = False
+      TabOrder = 0
+      object Label1: TLabel
+        Left = 48
+        Top = 21
+        Width = 308
+        Height = 19
+        Caption = 'Selecionar Livro -  ( Somente para atualiza'#231#227'o e exclus'#227'o )'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWhite
+        Font.Height = -16
+        Font.Name = 'Bebas Neue'
+        Font.Style = []
+        ParentFont = False
+      end
+      object Label2: TLabel
+        Left = 408
+        Top = 40
+        Width = 20
+        Height = 19
+        Caption = 'Id = '
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWhite
+        Font.Height = -16
+        Font.Name = 'Bebas Neue'
+        Font.Style = []
+        ParentFont = False
+      end
+      object lbl_id: TLabel
+        Left = 434
+        Top = 40
+        Width = 6
+        Height = 19
+        Caption = '?'
+        Font.Charset = ANSI_CHARSET
+        Font.Color = clWhite
+        Font.Height = -16
+        Font.Name = 'Bebas Neue'
+        Font.Style = []
+        ParentFont = False
+      end
+      object txt_cat: TLabeledEdit
+        Left = 48
+        Top = 88
+        Width = 322
+        Height = 21
+        EditLabel.Width = 98
+        EditLabel.Height = 19
+        EditLabel.Caption = 'Nome da Categoria'
+        EditLabel.Font.Charset = ANSI_CHARSET
+        EditLabel.Font.Color = clWhite
+        EditLabel.Font.Height = -16
+        EditLabel.Font.Name = 'Bebas Neue'
+        EditLabel.Font.Style = []
+        EditLabel.ParentFont = False
+        TabOrder = 0
+      end
+      object Button1: TButton
+        Left = 92
+        Top = 135
+        Width = 109
+        Height = 49
+        Caption = 'Adicionar'
+        Style = bsCommandLink
+        TabOrder = 1
+        OnClick = Button1Click
+      end
+      object Button3: TButton
+        Left = 207
+        Top = 135
+        Width = 92
+        Height = 49
+        Caption = 'Excluir'
+        Style = bsCommandLink
+        TabOrder = 2
+        OnClick = Button3Click
+      end
+      object Button4: TButton
+        Left = 305
+        Top = 135
+        Width = 105
+        Height = 49
+        Caption = 'Voltar'
+        Style = bsCommandLink
+        TabOrder = 3
+        OnClick = Button4Click
+      end
+      object CB_cat: TComboBox
+        Left = 48
+        Top = 40
+        Width = 322
+        Height = 21
+        Style = csDropDownList
+        TabOrder = 4
+      end
+    end
+  end
+end

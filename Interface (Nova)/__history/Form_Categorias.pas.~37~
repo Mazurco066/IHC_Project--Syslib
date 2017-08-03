@@ -1,0 +1,184 @@
+unit Form_Categorias;
+
+interface
+
+uses
+  Winapi.Windows, Winapi.Messages, System.SysUtils, System.Variants, System.Classes, Vcl.Graphics,
+  Vcl.Controls, Vcl.Forms, Vcl.Dialogs, Vcl.ExtCtrls, Vcl.StdCtrls;
+
+type
+  Tfrm_categorias = class(TForm)
+    Panel1: TPanel;
+    Panel2: TPanel;
+    Label1: TLabel;
+    Label2: TLabel;
+    lbl_id: TLabel;
+    txt_cat: TLabeledEdit;
+    Button1: TButton;
+    Button3: TButton;
+    Button4: TButton;
+    CB_cat: TComboBox;
+    btn_at: TButton;
+    //funções locais
+    function ValidaCampos():boolean;
+    procedure LimpaCampos();
+    procedure AlimentaCB();
+    procedure AutoPreenchimento(CatPr:string);
+    //funções locais
+    procedure Button4Click(Sender: TObject);
+    procedure Button1Click(Sender: TObject);
+    procedure Button3Click(Sender: TObject);
+    procedure FormActivate(Sender: TObject);
+    procedure CB_catChange(Sender: TObject);
+    procedure btn_atClick(Sender: TObject);
+  private
+    { Private declarations }
+  public
+    { Public declarations }
+  end;
+
+var
+  frm_categorias: Tfrm_categorias;
+
+implementation
+
+uses Form_Dados, Form_Livro_Incluir;
+
+{$R *.dfm}
+
+procedure Tfrm_categorias.Button1Click(Sender: TObject);
+begin
+  if (ValidaCampos = false) then begin
+    exit;
+  end else begin
+    Form_Dados.Modulo_dados.NovaCategoria(txt_cat.text);
+    showmessage('Cadastrado com Sucesso!');
+    AlimentaCB();
+    LimpaCampos();
+  end;
+end;
+
+procedure Tfrm_categorias.Button3Click(Sender: TObject);
+begin
+  if(lbl_id.Caption = '?') then begin
+    showmessage('Necessário selecionar ussuário ara Excluir!');
+  end else begin
+    Form_Dados.Modulo_Dados.ExluirCategoria(strtoint(lbl_id.Caption));
+    showmessage('Excluido com Sucesso!');
+    AlimentaCB();
+    LimpaCampos();
+  end;
+end;
+
+procedure Tfrm_categorias.Button4Click(Sender: TObject);
+begin
+
+  self.Close;
+
+end;
+
+procedure Tfrm_categorias.CB_catChange(Sender: TObject);
+begin
+    Autopreenchimento(CB_cat.Text);
+end;
+
+procedure Tfrm_categorias.FormActivate(Sender: TObject);
+begin
+
+  Form_Dados.Modulo_Dados.Query_cat.Active := true;
+  Form_Dados.Modulo_Dados.Query_cat.Close;
+  Form_Dados.Modulo_Dados.Query_cat.sql.Clear;
+  Form_Dados.Modulo_Dados.Query_cat.sql.Add('select * from categorias');
+  Form_Dados.Modulo_Dados.Query_cat.Open;
+  AlimentaCB();
+
+end;
+
+function Tfrm_categorias.ValidaCampos():boolean;
+begin
+
+  if(txt_cat.Text = '') then begin
+    ShowMessage('Campos devem ser preenchidos!');
+    txt_cat.SetFocus;
+    Result := false;
+    Exit;
+  end;
+
+  Result := true;
+
+end;
+
+procedure Tfrm_categorias.LimpaCampos();
+begin
+  txt_cat.Text := '';
+  lbl_id.Caption := '?';
+end;
+
+procedure Tfrm_categorias.AlimentaCB();
+begin
+
+  //para alimentar o CBProdutos
+    CB_cat.Items.Clear;
+
+    while not Form_dados.Modulo_Dados.DataSourceCat.DataSet.Eof do begin
+
+      CB_cat.Items.AddObject(Form_dados.Modulo_Dados.DataSourceCat.DataSet.FieldByName('descricao').asString,
+      TObject(Form_dados.Modulo_Dados.DataSourceCat.DataSet.FieldByName('descricao').asString));
+      Form_dados.Modulo_Dados.DataSourceCat.DataSet.Next;
+
+    end;
+
+    CB_cat.ItemIndex := 0;
+    //Combobox Alimentada com sucesso!!
+
+end;
+
+procedure Tfrm_categorias.AutoPreenchimento(CatPr:string);
+var txt1:string;
+    txt2:integer;
+begin
+
+  //ESSE PARTE ESTÁ EM CONSTRUÇÃO... EM HIPOTESE ALGUMA OUSE TIRAR ELA DO COMENTÁRIO
+  with Form_Dados.Modulo_Dados.Query_Cat do begin
+    Close;
+    SQL.Clear;
+    SQL.Add('select * from categorias where descricao = :CatPr');
+    Parameters.ParamByName('CatPr').Value := Catpr;
+    Open;
+
+    //Parameters.ParamByName('ProdutoPr').Value := ProdutoPr;
+
+  end;
+
+  txt1 := Form_Dados.Modulo_Dados.Query_Catdescricao.Value;
+  txt2 := Form_Dados.Modulo_Dados.Query_Catid.Value;
+
+
+  //Váriaveis sendo depositadas nas textboxes
+  txt_cat.Text := txt1;
+  lbl_id.Caption := inttostr(txt2);
+
+  //Resetando para Visualização
+  Form_Dados.Modulo_Dados.Query_cat.Close;
+  Form_Dados.Modulo_Dados.Query_cat.SQL.Clear;
+  Form_Dados.Modulo_Dados.Query_cat.SQL.Add('select * from categorias');
+  Form_Dados.Modulo_Dados.Query_cat.Open;
+  //Isso Reseta o codigo sql da query para selecionar todos os produtos
+
+end;
+
+procedure Tfrm_categorias.btn_atClick(Sender: TObject);
+begin
+
+  if (ValidaCampos = false) or (lbl_id.Caption = '?') then begin
+    exit;
+  end else begin
+    Form_Dados.Modulo_dados.AtualizarCategoria(strtoint(lbl_id.Caption),txt_cat.Text);
+    showmessage('Atualizado com Sucesso!');
+    AlimentaCB();
+    LimpaCampos();
+  end;
+
+end;
+
+end.

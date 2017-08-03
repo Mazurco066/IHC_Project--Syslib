@@ -1,0 +1,285 @@
+object frm_aluno: Tfrm_aluno
+  Left = 0
+  Top = 0
+  BorderStyle = bsSingle
+  Caption = 'Cadastrar Aluno'
+  ClientHeight = 343
+  ClientWidth = 751
+  Color = clBtnFace
+  Font.Charset = DEFAULT_CHARSET
+  Font.Color = clWindowText
+  Font.Height = -11
+  Font.Name = 'Tahoma'
+  Font.Style = []
+  OldCreateOrder = False
+  Position = poScreenCenter
+  OnActivate = FormActivate
+  PixelsPerInch = 96
+  TextHeight = 13
+  object Label2: TLabel
+    Left = 401
+    Top = 21
+    Width = 308
+    Height = 19
+    Caption = 'Selecionar Livro -  ( Somente para atualiza'#231#227'o e exclus'#227'o )'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Bebas Neue'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Label4: TLabel
+    Left = 408
+    Top = 40
+    Width = 20
+    Height = 19
+    Caption = 'Id = '
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Bebas Neue'
+    Font.Style = []
+    ParentFont = False
+  end
+  object lbl_id: TLabel
+    Left = 434
+    Top = 40
+    Width = 6
+    Height = 19
+    Caption = '?'
+    Font.Charset = ANSI_CHARSET
+    Font.Color = clWhite
+    Font.Height = -16
+    Font.Name = 'Bebas Neue'
+    Font.Style = []
+    ParentFont = False
+  end
+  object Panel1: TPanel
+    Left = 0
+    Top = 0
+    Width = 751
+    Height = 343
+    Align = alClient
+    Color = clBlack
+    ParentBackground = False
+    TabOrder = 0
+    ExplicitHeight = 301
+    object Label1: TLabel
+      Left = 48
+      Top = 21
+      Width = 315
+      Height = 19
+      Caption = 'Selecionar  Aluno -  ( Somente para atualiza'#231#227'o e exclus'#227'o )'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Bebas Neue'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label3: TLabel
+      Left = 48
+      Top = 181
+      Width = 30
+      Height = 19
+      Caption = 'Curso'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Bebas Neue'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label5: TLabel
+      Left = 387
+      Top = 40
+      Width = 20
+      Height = 19
+      Caption = 'Id = '
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Bebas Neue'
+      Font.Style = []
+      ParentFont = False
+    end
+    object lb_id: TLabel
+      Left = 413
+      Top = 40
+      Width = 6
+      Height = 19
+      Caption = '?'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Bebas Neue'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Label7: TLabel
+      Left = 48
+      Top = 237
+      Width = 164
+      Height = 19
+      Caption = 'Selecionar  Categoria  Favorita'
+      Font.Charset = ANSI_CHARSET
+      Font.Color = clWhite
+      Font.Height = -16
+      Font.Name = 'Bebas Neue'
+      Font.Style = []
+      ParentFont = False
+    end
+    object Button4: TButton
+      Left = 523
+      Top = 294
+      Width = 105
+      Height = 49
+      Caption = 'Voltar'
+      Style = bsCommandLink
+      TabOrder = 0
+      OnClick = Button4Click
+    end
+    object Button3: TButton
+      Left = 387
+      Top = 294
+      Width = 130
+      Height = 49
+      Caption = 'Excluir'
+      Style = bsCommandLink
+      TabOrder = 1
+      OnClick = Button3Click
+    end
+    object Button2: TButton
+      Left = 251
+      Top = 294
+      Width = 130
+      Height = 49
+      Caption = 'Atualizar'
+      Style = bsCommandLink
+      TabOrder = 2
+      OnClick = Button2Click
+    end
+    object Button1: TButton
+      Left = 115
+      Top = 294
+      Width = 137
+      Height = 49
+      Caption = 'Adicionar'
+      Style = bsCommandLink
+      TabOrder = 3
+      OnClick = Button1Click
+    end
+    object CB_aluno: TComboBox
+      Left = 48
+      Top = 40
+      Width = 322
+      Height = 21
+      Style = csDropDownList
+      TabOrder = 4
+      OnChange = CB_alunoChange
+    end
+    object txt_aluno: TLabeledEdit
+      Left = 48
+      Top = 88
+      Width = 322
+      Height = 21
+      EditLabel.Width = 78
+      EditLabel.Height = 19
+      EditLabel.Caption = 'Nome do  Aluno'
+      EditLabel.Font.Charset = ANSI_CHARSET
+      EditLabel.Font.Color = clWhite
+      EditLabel.Font.Height = -16
+      EditLabel.Font.Name = 'Bebas Neue'
+      EditLabel.Font.Style = []
+      EditLabel.ParentFont = False
+      TabOrder = 5
+    end
+    object txt_telefone: TLabeledEdit
+      Left = 48
+      Top = 144
+      Width = 322
+      Height = 21
+      EditLabel.Width = 48
+      EditLabel.Height = 19
+      EditLabel.Caption = 'Telefone'
+      EditLabel.Font.Charset = ANSI_CHARSET
+      EditLabel.Font.Color = clWhite
+      EditLabel.Font.Height = -16
+      EditLabel.Font.Name = 'Bebas Neue'
+      EditLabel.Font.Style = []
+      EditLabel.ParentFont = False
+      TabOrder = 6
+    end
+    object txt_ra: TLabeledEdit
+      Left = 387
+      Top = 200
+      Width = 322
+      Height = 21
+      EditLabel.Width = 46
+      EditLabel.Height = 19
+      EditLabel.Caption = 'RA Aluno'
+      EditLabel.Font.Charset = ANSI_CHARSET
+      EditLabel.Font.Color = clWhite
+      EditLabel.Font.Height = -16
+      EditLabel.Font.Name = 'Bebas Neue'
+      EditLabel.Font.Style = []
+      EditLabel.ParentFont = False
+      TabOrder = 7
+    end
+    object txt_end: TLabeledEdit
+      Left = 387
+      Top = 144
+      Width = 322
+      Height = 21
+      EditLabel.Width = 50
+      EditLabel.Height = 19
+      EditLabel.Caption = 'Endere'#231'o'
+      EditLabel.Font.Charset = ANSI_CHARSET
+      EditLabel.Font.Color = clWhite
+      EditLabel.Font.Height = -16
+      EditLabel.Font.Name = 'Bebas Neue'
+      EditLabel.Font.Style = []
+      EditLabel.ParentFont = False
+      TabOrder = 8
+    end
+    object txt_rg: TLabeledEdit
+      Left = 387
+      Top = 88
+      Width = 322
+      Height = 21
+      EditLabel.Width = 47
+      EditLabel.Height = 19
+      EditLabel.Caption = 'RG  Aluno'
+      EditLabel.Font.Charset = ANSI_CHARSET
+      EditLabel.Font.Color = clWhite
+      EditLabel.Font.Height = -16
+      EditLabel.Font.Name = 'Bebas Neue'
+      EditLabel.Font.Style = []
+      EditLabel.ParentFont = False
+      TabOrder = 9
+    end
+    object CB_curso: TComboBox
+      Left = 48
+      Top = 200
+      Width = 322
+      Height = 21
+      Style = csDropDownList
+      TabOrder = 10
+      Items.Strings = (
+        'Analise e Desenvolvimento de Sistemas (manh'#227')'
+        'Analise e Desenvolvimento de Sistemas (noite)'
+        'Projetos Mecanicos (manh'#227')'
+        'Projetos Mecanicos (noite)'
+        'Mecatr'#244'nica (tarde)')
+    end
+    object CB_cat: TComboBox
+      Left = 48
+      Top = 256
+      Width = 322
+      Height = 21
+      Style = csDropDownList
+      TabOrder = 11
+    end
+  end
+end
