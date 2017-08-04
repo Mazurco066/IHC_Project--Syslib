@@ -73,12 +73,12 @@ var
 
 implementation
 
-uses Form_Login, Form_User_Incluir, Form_Livro_incluir, Form_Aluno_Incluir, form_Alocar, form_devolucao, Form_Histórico, Form_Gerenciar;
+uses Form_Login, Form_User_Incluir, Form_Livro_incluir, Form_Aluno_Incluir, form_Alocar, form_devolucao, Form_HistÃ³rico, Form_Gerenciar;
 
 {$R *.dfm}
 
 
-//Trocar Usuário
+//Trocar UsuÃ¡rio
 procedure Tfrm_menu.Deslogar1Click(Sender: TObject);
 begin
   frm_login.Visible := true;
@@ -119,7 +119,7 @@ end;
 
 procedure Tfrm_menu.Image7Click(Sender: TObject);
 begin
-    CriarForm(Form_Histórico.Thistorico_locacao);
+    CriarForm(Form_HistÃ³rico.Thistorico_locacao);
 end;
 
 procedure Tfrm_menu.Novoaluno1Click(Sender: TObject);
@@ -173,7 +173,7 @@ end;
 
 procedure Tfrm_menu.CriarForm(NomeForm: TFormClass);
 begin
-  //Procedimento para criar formulario na memória
+  //Procedimento para criar formulario na memÃ³ria e deixa-lo visivel
   //OBS PARA CHAMAR ESSA SUB (CriarForm(nomearquivo.Tnomedaform);)
   with NomeForm do begin
 
